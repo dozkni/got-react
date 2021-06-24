@@ -41,9 +41,12 @@ export default class GotService {
     getHouse(id) {
         return this.getResourse(`/houses/${id}`);
     }
+
+    __extractId = item => item.url.match(/\d+/)[0]
     
     __transformCharacter(char) {
         return {
+            id: this.__extractId(char),
             name: char.name || 'n / a',
             gender: char.gender || 'n / a',
             born: char.born || 'n / a',
@@ -54,6 +57,7 @@ export default class GotService {
 
     __transformHouse(house) {
         return {
+            id: this.__extractId(house),
             name: house.name || 'n / a',
             region: house.region || 'n / a',
             words: house.words || 'n / a',
@@ -65,6 +69,7 @@ export default class GotService {
 
     __transformBook(book) {
         return {
+            id: this.__extractId(book),
             name: book.name || 'n / a',
             numberOfPages: book.numberOfPages || 'n / a',
             publisher: book.publisher || 'n / a',
