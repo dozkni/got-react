@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import {Col, Row, Container} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
-import ItemList from '../itemList';
-import CharDetails from '../charDetails';
-import { Button } from 'bootstrap';
 import ErrorMessage from '../errorMessage';
+import CharPage from '../charPage';
 
 import './app.css';
 
@@ -13,8 +11,11 @@ export default class App extends Component {
 
   state = {
     showRandomChar: true,
-    error: false,
-    selectedChar: null
+    error: false
+  }
+
+  componentDidCatch() {
+    this.setState({error: true})
   }
 
   toggleRandomChar = () => {
@@ -23,10 +24,6 @@ export default class App extends Component {
         showRandomChar: !state.showRandomChar
       }
     })
-  }
-
-  onCharSelected = id => {
-    this.setState({selectedChar: id});
   }
 
   render() {
@@ -46,14 +43,7 @@ export default class App extends Component {
               {char}
             </Col>
           </Row>
-          <Row>
-            <Col md='6'>
-              <ItemList onCharSelected={this.onCharSelected} />
-            </Col>
-            <Col md='6'>
-              <CharDetails charId={this.state.selectedChar} />
-            </Col>
-          </Row>
+          <CharPage/>
         </Container>
       </>
     );
