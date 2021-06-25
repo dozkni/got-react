@@ -6,7 +6,7 @@ export default class GotService {
         this.__apiBase = "https://anapioficeandfire.com/api";
     }
 
-    async getResourse(url) {
+    getResourse = async (url) => {
         const res = await fetch(this.__apiBase + url);
 
         if (!res.ok) {
@@ -16,35 +16,41 @@ export default class GotService {
         return await res.json();
     }
 
-    async getAllCharacters(page, pageSize=10) {
+    getAllCharacters = async (page, pageSize=10) => {
         const res = await this.getResourse(`/characters?page=${page}&pageSize=${pageSize}`);
         return res.map(this.__transformCharacter);
     }
 
-    async getCharacter(id) {
+    getCharacter = async (id) => {
         const char = await this.getResourse(`/characters/${id}`);
         return this.__transformCharacter(char);
     }    
 
-    getAllBooks(page, pageSize=10) {
-        return this.getResourse(`/books?page=${page}&pageSize=${pageSize}`);
+    getAllBooks = async (page, pageSize=10) => {
+        const res = await this.getResourse(`/books?page=${page}&pageSize=${pageSize}`);
+        return res.map(this.__transformBook);
     }
 
-    getBook(id) {
-        return this.getResourse(`/books/${id}`);
+    getBook = async (id) => {
+        const book = await this.getResourse(`/books/${id}`);
+        return this.__transformBook(book);
     }    
 
-    getAllHouses(page, pageSize=10) {
-        return this.getResourse(`/houses?page=${page}&pageSize=${pageSize}`);
+    getAllHouses = async (page, pageSize=10) => {
+        const res = await this.getResourse(`/houses?page=${page}&pageSize=${pageSize}`);
+        return res.map(this.__transformHouse);
     }
 
-    getHouse(id) {
-        return this.getResourse(`/houses/${id}`);
+    getHouse = async (id) => {
+        const house = await this.getResourse(`/houses/${id}`);
+        return this.__transformHouse(house);
     }
 
-    __extractId = item => item.url.match(/\d+/)[0]
+    __extractId = (item) => {
+        return item.url.match(/\d+/)[0];
+    };
     
-    __transformCharacter(char) {
+    __transformCharacter = (char) => {
         return {
             id: this.__extractId(char),
             name: char.name || 'n / a',
@@ -55,7 +61,7 @@ export default class GotService {
         }
     }
 
-    __transformHouse(house) {
+    __transformHouse = (house) => {
         return {
             id: this.__extractId(house),
             name: house.name || 'n / a',
@@ -67,7 +73,7 @@ export default class GotService {
         }
     }
 
-    __transformBook(book) {
+    __transformBook = (book) => {
         return {
             id: this.__extractId(book),
             name: book.name || 'n / a',
