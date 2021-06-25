@@ -1,9 +1,9 @@
 import React, {Component} from "react";
-import ItemList from "../itemList";
-import ItemDetails from "../itemDetails";
-import ErrorMessage from "../errorMessage";
-import GotService from "../../services/gotService";
-import RowBlock from "../rowBlock";
+import ItemList from "../../itemList";
+import ItemDetails, {Field} from "../../itemDetails";
+import ErrorMessage from "../../errorMessage";
+import GotService from "../../../services/gotService";
+import RowBlock from "../../rowBlock";
 
 export default class BookPage extends Component {
 
@@ -36,8 +36,12 @@ export default class BookPage extends Component {
         const bookDetails = (
             <ItemDetails 
                 itemId={this.state.selectedItem}
-                getItem={this.gotService.getBook}
-                itemValues={["numberOfPages", "publisher", "released", "culture"]} />
+                getItem={this.gotService.getBook} >
+                <Field field="numberOfPages" label="Number of pages" />
+                <Field field="publisher" label="Publisher" />
+                <Field field="released" label="Released" />
+                <Field field="culture" label="Culture" />
+            </ItemDetails>
         );
 
         return (

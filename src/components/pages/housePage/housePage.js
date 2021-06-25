@@ -1,9 +1,9 @@
 import React, {Component} from "react";
-import ItemList from "../itemList";
-import ItemDetails from "../itemDetails";
-import ErrorMessage from "../errorMessage";
-import GotService from "../../services/gotService";
-import RowBlock from "../rowBlock";
+import ItemList from "../../itemList";
+import ItemDetails, {Field} from "../../itemDetails";
+import ErrorMessage from "../../errorMessage";
+import GotService from "../../../services/gotService";
+import RowBlock from "../../rowBlock";
 
 export default class HousePage extends Component {
 
@@ -36,9 +36,13 @@ export default class HousePage extends Component {
         const houseDetails = (
             <ItemDetails 
                 itemId={this.state.selectedItem}
-                getItem={this.gotService.getHouse}
-                
-                itemValues={["region", "words", "titles", "overlord", "ancestralWeapons"]} />
+                getItem={this.gotService.getHouse} >
+                <Field field="region" label="Region" />
+                <Field field="words" label="Words" />
+                <Field field="titles" label="Titles" />
+                <Field field="overlord" label="Overlord" />
+                <Field field="ancestralWeapons" label="Ancestral weapons" />
+            </ItemDetails>
         );
 
         return (

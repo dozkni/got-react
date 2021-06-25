@@ -2,6 +2,17 @@ import React, { Component } from "react";
 import GotService from '../../services/gotService';
 import "./itemDetails.css";
 
+const Field = ({item, field, label}) => {
+    return (
+        <li key={field} className="list-group-item d-flex justify-content-between">
+            <span className="term">{label}</span>
+            <span>{item[field]}</span>
+        </li>
+    )
+}
+
+export {Field};
+
 export default class ItemDetails extends Component {
 
     gotService = new GotService();
@@ -39,23 +50,28 @@ export default class ItemDetails extends Component {
             return <span className="select-error">Please select a item</span>
         }
 
-        const {name} = this.state.item;
-        const {itemValues} = this.props;
-        const values = itemValues.map(element => {
-            const {item} = this.state;
-            return (
-                <li key={element} className="list-group-item d-flex justify-content-between">
-                    <span className="term">{element}</span>
-                    <span>{item[element]}</span>
-                </li>
-            )
-        });
+        const {item} = this.state;
+        const {name} = item;
+        //const {itemValues} = this.props;
+        // const values = itemValues.map(element => {
+        //     const {item} = this.state;
+        //     return (
+        //         <li key={element} className="list-group-item d-flex justify-content-between">
+        //             <span className="term">{element}</span>
+        //             <span>{item[element]}</span>
+        //         </li>
+        //     )
+        // });
 
         return (
             <div className="char-details rounded">
                 <h4>{name}</h4>
                 <ul className="list-group list-group-flush">
-                    {values}
+                    {
+                        React.Children.map(this.props.children, (child) => {
+                            return React.cloneElement(child, {item})
+                        })
+                    }
                 </ul>
             </div>
         )
