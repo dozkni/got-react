@@ -43,6 +43,7 @@ export default class GotService {
 
     getHouse = async (id) => {
         const house = await this.getResourse(`/houses/${id}`);
+        console.log(house);
         return this.__transformHouse(house);
     }
 
